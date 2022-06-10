@@ -56,27 +56,7 @@ static const char* stretch_legs = "Tentwmena podia";
 #define BLE_SIV_UUID                      "f6ef9d90-1c28-4ddb-a31b-ad9680469e50"    // random UUID
 
 
-////for step counter
-//typedef struct __attribute__( ( packed ) )
-//{
-//  uint16_t flags ;    // 0b0000000000000001
-//  uint16_t steps3;
-//  uint16_t floors;
-//
-//} step_climber_data;
-//
-//
-//union step_climber_data_u
-//{
-//  struct __attribute__( ( packed ) )
-//  {
-//    step_climber_data values;
-//  };
-//  uint8_t bytes[ sizeof( step_climber_data ) ];
-//} ;
-//
-//union step_climber_data_u  stepData = { .values = { .flags = 0b0000000000000001, .steps3 = 0, .floors = 0 } };
-
+/
 //----------------------------------------------------------------------------------------------------------------------
 // BLE Temperature Measurment && Step Counter && GPS Lat + Long
 //----------------------------------------------------------------------------------------------------------------------
@@ -242,11 +222,6 @@ void loop() {
         newsteps = 0 ;
       }
       
-      timer7 = millis();
-      if(timer7 > timer8 + 4000){
-      steps = steps +1;
-      timer8 = millis();
-      }
       steps = newsteps + steps;
       if ( steps != steps2) {
         steps2 = steps;
@@ -351,21 +326,19 @@ void getsteps() {
           if ( ( xaccl[j - 3] > yaccl[j - 3] ) && ( xaccl[j - 2] > yaccl[j - 2] ) && ( xaccl[j - 1] > yaccl[j - 1] ) && ( xaccl[j] > yaccl[j] ) && ( yaccl[j - 1] < -45 ) && ( yaccl[j] < -45 ) ) {
             lay_flag = 1;
             stretch_flag = 0;
-            //  Serial.println("Ksaplwmenos");
-            //  layCharacteristic.writeValue(lay_down);
+           
             delay(5);
             //  return;
           } else {
             lay_flag = 0;
-            //  layCharacteristic.writeValue(not_lay_down);
+           
             delay(10);
           }
           //stretched leg
           if ( (Xcheck) && (Xcheck2) && (Xcheck3) && (Xcheck4) && (YandZcheck) && (YandZcheck2) && (YandZcheck3) && (YandZcheck4) ) { //sitting with stretched legs, various positions
             stretch_flag = 1;
             lay_flag = 0;
-            //  Serial.println("To allo");
-            //  layCharacteristic.writeValue(stretch_legs);
+           
             delay(5);
             //  return;
           } else {
@@ -426,9 +399,9 @@ void getsteps() {
       }
     }
   }
-  // Serial.println("To avg twn average einai: ");
+ 
   totavg = (totavg / 19.0);
-  //  Serial.println(totavg);
+ 
   if (totavg > 31.50) {
     newsteps = 0;
   }
@@ -472,10 +445,7 @@ void calibrated() {
   yavg = sum1 / 40.0;
   zavg = sum2 / 40.0;
   //
-  //  Serial.println("Ta average twn X, Y ,Z : " );
-  // Serial.print(xavg); Serial.print('\t'); Serial.print(yavg); Serial.print('\t'); Serial.println(zavg);
-  //
-  //  Serial.println("Calibration Successful!");
+ 
 }
 
 
